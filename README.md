@@ -50,6 +50,64 @@
 ### Extension
 
 1. Add a route to the API specification that isn't implemented. What result does specmatic give now?
-2. Implement your new route
+2. Find out how specmatic understands what routes exist or don't exist on the backend
+3. Implement your new route (you will need to restart the container to see the changes)
 
 ## Generative Tests
+
+### Step 1: Generate new tests
+
+1. Run `make generative-tests`
+2. Review test failures
+
+### Step 2: Fix defects
+
+1. Add examples that show the same defects
+2. Run `make contract-test` or `make contract-test-examples` to show that the same failing tests exist
+3. Fix the backend code
+4. Restart the backend container
+
+### Extension
+
+1. Add a new route that has an enum field and run `make generative-tests` to see how many test cases are generated
+
+## Consumer Contract Testing
+
+### Step 1: Run the stub
+
+1. Run `make stub`
+2. Run `curl http://localhost:9000/api/messages` and check the response
+3. Run a request against the stub server that uses the payload from your example
+4. Run a request against the stub server that uses a payload not seen in your example
+5. Notice how the stub will return the matching response to a request payload, and a correctly shaped response when it doesn't match
+6. Shut down the stub server
+
+### Step 2: Malformed example
+
+1. Change a response example to not match the API specification, e.g. change the type of string field to an integer
+2. Run `make stub`
+3. Check the output of the stub server for any error messages
+4. Send the request example, and check to see if the response matches the example or is randomly generated
+
+### Extension
+
+1. Run `make strict-stub`
+2. Play with requests to see what how strict mode changes behaviour
+
+## Enforcing Backwards Compatibility
+
+### Step 1: A compatible change
+
+1. Create a copy of your `service.yaml` called `service_v2.yaml`
+2. Add an optional field to the `MessageContent` schema
+3. Run `make compare` to check whether that the contracts are deemed non-backwards compatible
+
+### Step 2: A breaking change
+
+1. Create a copy of `service_v2.yaml` called `service_v3.yaml`
+2. Make your optional field from step 1 mandatory
+3. Run `make compare` to check that the contracts are deemed non-backwards compatible
+
+### Extension:
+
+1. Experiment to determine what rules specmatic uses to define backwards and non-backwards compatible changes for requests and responses. There are seven in total, including the two done in the steps before (adding an optional field to a request, and make an optional field mandatory on a request).
