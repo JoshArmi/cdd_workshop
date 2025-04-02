@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <title>Specmatic Report</title>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+
+<body class="flex flex-col min-h-screen gap-3 p-4 pb-0 font-mono">
+    <header class="border-2 shadow-md print:shadow-none">
+        <div class="flex items-center justify-between p-4" id="banner">
+            <img class="w-64 h-14" src="assets/specmatic-logo.svg" alt="Specmatic">
+            <h2 class="text-3xl font-medium font-roboto">Contract Test Results</h2>
+            <div class="w-64 text-right print:hidden">
+                <button class="p-2 duration-100 border-2 active:scale-105 hover:border-blue-500" id="downloadButton">
+                    <img src="assets/download.svg" alt="Download Button" class="size-8">
+                </button>
+            </div>
+        </div>
+        <div id="summary" class="flex items-center justify-between gap-5 p-1 border-2 bg-rejected" data-panel="table">
+            <div class="flex flex-col ml-2 print:items-center print:gap-2" id="totalCoverage">
+                <p class="text-black/50 whitespace-nowrap">API Coverage</p>
+                <span class="text-center text-3xl font-bold rejected">60%</span>
+            </div>
+            <ol id="results" class="relative flex items-center justify-center flex-1 px-2 print:flex-wrap gap-x-5 *:min-w-44 print:*:min-w-0">
+                <li class="flex items-center justify-center gap-2 cursor-pointer group shadow-md print:shadow-none h-12" data-type="Success">
+                    <img src="assets/check-badge.svg" alt="success" class="size-8">
+                    <p class="group-hover:text-green-500">Success: <span>0</span>
+                        <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-green-500"></span>
+                    </p>
+                </li>
+                <li class="flex items-center justify-center gap-2 cursor-pointer group shadow-md print:shadow-none h-12" data-type="Failed">
+                    <img src="assets/x-circle.svg" alt="failed" class="size-8">
+                    <p class="group-hover:text-red-500">Failed: <span>3</span>
+                        <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-red-500"></span>
+                    </p>
+                </li>
+                <li class="flex items-center justify-center gap-2 cursor-pointer group shadow-md print:shadow-none h-12" data-type="Error">
+                    <img src="assets/exclamation-triangle.svg" alt="errors" class="size-8">
+                    <p class="group-hover:text-red-500">Errors: <span>0</span>
+                        <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-red-500"></span>
+                    </p>
+                </li>
+                 <li class="flex items-center justify-center gap-2 cursor-pointer group shadow-md print:shadow-none h-12" data-type="Skipped">
+                    <img src="assets/blocked.svg" alt="skipped" class="size-8">
+                    <p class="group-hover:text-yellow-500">Skipped: <span>2</span>
+                        <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-yellow-500"></span>
+                    </p>
+                </li>
+                <li class="flex items-center justify-center gap-2 cursor-pointer group shadow-md print:shadow-none h-12 button-pressed" id="all" data-type="All">
+                    <img src="assets/clipboard-document-list.svg" alt="total-tests" class="size-8">
+                    <p class="group-hover:text-blue-500">Total: <span>5</span>
+                        <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-blue-500"></span>
+                    </p>
+                </li>
+                <!-- <li class="flex items-center justify-center gap-2" id="total-time">
+                    <img src="assets/clock.svg" alt="total-time" class="size-8">
+                    <p>Time: 2ms</p>
+                </li> -->
+            </ol>
+            <div id="badge" class="relative flex items-center justify-center">
+                <img src="assets/badge.svg" class="size-18 rejected" alt="badge">
+                <img src="assets/mark-rejected.svg" alt="mark" class="absolute inset-0 z-10 mx-auto my-auto size-14">
+            </div>
+        </div>
+        <div id="additional-info" class="p-2 text-sm">
+            <ol class="flex justify-between">
+                <li>
+                    <p>Actuator: <span class="font-semibold">Disabled</span></p>
+                </li>
+                
+            </ol>
+        </div>
+    </header>
+    <main class="flex items-start flex-1 overflow-hidden border-t-2 shadow-md group print:shadow-none print:overflow-visible" data-item="table">
+        <table id="reports" class="font-mono transition-transform -translate-x-full group-data-[item=table]:translate-x-0 duration-700 min-w-full" data-filter="All">
+            <thead>
+                <tr class="font-bold">
+                    <td>Coverage</td>
+                    <td colspan="2">Path</td>
+                    <td colspan="1">Method</td>
+                    <td colspan="1">Response</td>
+                    <td>Exercised</td>
+                    <td>Result</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-type="Failed" data-color="red" data-result="covered" data-coverage="67">
+                    <td rowspan="3">
+                        67%
+                    </td>
+                    <td rowspan="3" data-main="true" colspan="2">
+                        /api/messages
+                    </td>
+                    <td rowspan="2" data-main="true" colspan="1">
+                        POST
+                    </td>
+                    <td colspan="1">
+                        <p>200</p>
+                        <span class="text-xs">text/plain</span>
+                    </td>
+                    <td>1</td>
+                    <td>
+                        <span class="capitalize px-4 py-1.5 font-medium rounded-lg whitespace-nowrap bg-red-300">
+                            covered
+                        </span>
+                    </td>
+                </tr>
+                <tr data-type="Skipped" data-color="yellow" data-result="not covered" data-coverage="67">
+                    <td rowspan="3" class="hidden">
+                        67%
+                    </td>
+                    <td rowspan="3" data-main="false" colspan="2" class="hidden">
+                        /api/messages
+                    </td>
+                    <td rowspan="2" data-main="false" colspan="1" class="hidden">
+                        POST
+                    </td>
+                    <td colspan="1">
+                        <p>400</p>
+                        <span class="text-xs"></span>
+                    </td>
+                    <td>0</td>
+                    <td>
+                        <span class="capitalize px-4 py-1.5 font-medium rounded-lg whitespace-nowrap bg-yellow-300">
+                            not covered
+                        </span>
+                    </td>
+                </tr>
+                <tr data-type="Failed" data-color="red" data-result="covered" data-coverage="67">
+                    <td rowspan="3" class="hidden">
+                        67%
+                    </td>
+                    <td rowspan="3" data-main="false" colspan="2" class="hidden">
+                        /api/messages
+                    </td>
+                    <td rowspan="1" data-main="true" colspan="1">
+                        GET
+                    </td>
+                    <td colspan="1">
+                        <p>200</p>
+                        <span class="text-xs"></span>
+                    </td>
+                    <td>1</td>
+                    <td>
+                        <span class="capitalize px-4 py-1.5 font-medium rounded-lg whitespace-nowrap bg-red-300">
+                            covered
+                        </span>
+                    </td>
+                </tr>
+                <tr data-type="Failed" data-color="red" data-result="covered" data-coverage="50">
+                    <td rowspan="2">
+                        50%
+                    </td>
+                    <td rowspan="2" data-main="true" colspan="2">
+                        /api/messages/{id}
+                    </td>
+                    <td rowspan="2" data-main="true" colspan="1">
+                        GET
+                    </td>
+                    <td colspan="1">
+                        <p>200</p>
+                        <span class="text-xs"></span>
+                    </td>
+                    <td>1</td>
+                    <td>
+                        <span class="capitalize px-4 py-1.5 font-medium rounded-lg whitespace-nowrap bg-red-300">
+                            covered
+                        </span>
+                    </td>
+                </tr>
+                <tr data-type="Skipped" data-color="yellow" data-result="not covered" data-coverage="50">
+                    <td rowspan="2" class="hidden">
+                        50%
+                    </td>
+                    <td rowspan="2" data-main="false" colspan="2" class="hidden">
+                        /api/messages/{id}
+                    </td>
+                    <td rowspan="2" data-main="false" colspan="1" class="hidden">
+                        GET
+                    </td>
+                    <td colspan="1">
+                        <p>404</p>
+                        <span class="text-xs"></span>
+                    </td>
+                    <td>0</td>
+                    <td>
+                        <span class="capitalize px-4 py-1.5 font-medium rounded-lg whitespace-nowrap bg-yellow-300">
+                            not covered
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="details" class="transition-transform translate-x-full group-data-[item=details]:-translate-x-full duration-700 min-w-full p-2 print:hidden">
+            <div class="flex gap-3 top-2" id="response-details">
+                <button id="go-back" class="px-6 py-2 text-white duration-500 bg-blue-500 rounded-md hover:bg-blue-700 group">
+                    <span class="text-lg">&larr;</span>
+                    <span>Go Back</span>
+                </button>
+                <ul id="response-summary" class="flex items-center justify-between flex-1 px-10 gap-10 px-10 border-2 border-red-300 rounded-md font-roboto">
+                </ul>
+            </div>
+            <ul id="scenarios" class="flex flex-col gap-3 py-2 mt-3">
+            </ul>
+        </div>
+    </main>
+    <footer class="flex items-center justify-between p-2 text-center print:flex-col print:gap-2">
+        <p class="w-96 text-left print:text-center">Generated On: <span class="font-mono">Mon, Mar 31 2025 9:58PM</span></p>
+        <div class="flex items-center gap-2">
+            <span class="whitespace-nowrap">Powered By</span>
+            <img src="assets/specmatic-logo.svg" alt="Specmatic" class="w-48 mb-2">
+            <p class="font-light font-roboto">[2.7.6]</p>
+        </div>
+        <div class="flex items-center justify-end gap-1 w-96 print:justify-center">
+            <p>Copyright</p>
+            <p class="text-3xl">&copy;</p>
+            <p>All Rights Reserved</p>
+        </div>
+    </footer>
+    <script id="json-data"  type="application/json">
+        {"/api/messages":{"POST":{"text/plain":{"200":[{"name":" Scenario: POST /api/messages -> 200","baseUrl":"http://localhost:3000","duration":2,"testResult":"Failed","valid":true,"wip":false,"request":"POST /api/messages\nSpecmatic-Response-Code: 200\nAccept-Charset: UTF-8\nAccept: */*\nContent-Type: text/plain\n\nIGMON","requestTime":1743429517077,"response":"200 OK\nContent-Type: application/json\nTransfer-Encoding: chunked\nDate: Mon, 31 Mar 2025 13:58:37 GMT\nKeep-Alive: timeout=60\nConnection: keep-alive\n\n{\n    \"id\": \"cbc58cd4-e280-45c1-8ccc-13eaf81c8e2a\",\n    \"content\": \"IGMON\",\n    \"timestamp\": \"2025-03-31 13:58:37\"\n}","responseTime":1743429517079,"specFileName":"/Users/josharmitage/Code/cdd_workshop/openapi.yaml","details":" Scenario: POST /api/messages -> 200 has FAILED\nIn scenario \"Create a new message. Response: Message created successfully\"\nAPI: POST /api/messages -> 200\n\n  >> RESPONSE.BODY.timestamp\n  \n     Error: Error while parsing the dateTime as per RFC 3339: 2025-03-31 13:58:37","htmlResult":"Failed"}]},"":{"400":[{"name":"Scenario: /api/messages -> 400","baseUrl":"http://localhost:3000","duration":0,"testResult":"NotCovered","valid":true,"wip":false,"request":"No Request","requestTime":0,"response":"No Response","responseTime":0,"specFileName":"/Users/josharmitage/Code/cdd_workshop/openapi.yaml","details":"Scenario: /api/messages -> 400 has been SKIPPED","htmlResult":"Skipped"}]}},"GET":{"":{"200":[{"name":" Scenario: GET /api/messages -> 200","baseUrl":"http://localhost:3000","duration":0,"testResult":"Failed","valid":true,"wip":false,"request":"GET /api/messages\nSpecmatic-Response-Code: 200\nAccept-Charset: UTF-8\nAccept: */*\nContent-Type: NOT SENT\n\n","requestTime":1743429517126,"response":"200 OK\nContent-Type: application/json\nTransfer-Encoding: chunked\nDate: Mon, 31 Mar 2025 13:58:37 GMT\nKeep-Alive: timeout=60\nConnection: keep-alive\n\n[\n    {\n        \"id\": \"4b6336e8-0cd7-499f-8e07-2a27ba751531\",\n        \"content\": \"IXMVC\",\n        \"timestamp\": \"2025-03-31 13:48:50\"\n    },\n    {\n        \"id\": \"cbc58cd4-e280-45c1-8ccc-13eaf81c8e2a\",\n        \"content\": \"IGMON\",\n        \"timestamp\": \"2025-03-31 13:58:37\"\n    }\n]","responseTime":1743429517126,"specFileName":"/Users/josharmitage/Code/cdd_workshop/openapi.yaml","details":" Scenario: GET /api/messages -> 200 has FAILED\nIn scenario \"Get all messages. Response: List of messages retrieved successfully\"\nAPI: GET /api/messages -> 200\n\n  >> RESPONSE.BODY[0].timestamp\n  \n     Error: Error while parsing the dateTime as per RFC 3339: 2025-03-31 13:48:50\n  \n  >> RESPONSE.BODY[1].timestamp\n  \n     Error: Error while parsing the dateTime as per RFC 3339: 2025-03-31 13:58:37","htmlResult":"Failed"}]}}},"/api/messages/{id}":{"GET":{"":{"200":[{"name":" Scenario: GET /api/messages/(id:string) -> 200","baseUrl":"http://localhost:3000","duration":0,"testResult":"Failed","valid":true,"wip":false,"request":"GET /api/messages/NTFDC\nSpecmatic-Response-Code: 200\nAccept-Charset: UTF-8\nAccept: */*\nContent-Type: NOT SENT\n\n","requestTime":1743429517142,"response":"404 Not Found\nContent-Length: 0\nDate: Mon, 31 Mar 2025 13:58:37 GMT\nKeep-Alive: timeout=60\nConnection: keep-alive\n\n","responseTime":1743429517142,"specFileName":"/Users/josharmitage/Code/cdd_workshop/openapi.yaml","details":" Scenario: GET /api/messages/(id:string) -> 200 has FAILED\nIn scenario \"Get message by ID. Response: Message retrieved successfully\"\nAPI: GET /api/messages/(id:string) -> 200\n\n  >> RESPONSE.STATUS\n  \n     Expected status 200, actual was status 404","htmlResult":"Failed"}],"404":[{"name":"Scenario: /api/messages/{id} -> 404","baseUrl":"http://localhost:3000","duration":0,"testResult":"NotCovered","valid":true,"wip":false,"request":"No Request","requestTime":0,"response":"No Response","responseTime":0,"specFileName":"/Users/josharmitage/Code/cdd_workshop/openapi.yaml","details":"Scenario: /api/messages/{id} -> 404 has been SKIPPED","htmlResult":"Skipped"}]}}}}
+    </script>
+    <script defer type="text/javascript" src="assets/utils.js"></script>
+    <script defer type="text/javascript" src="assets/summaryUpdater.js"></script>
+    <script defer type="text/javascript" src="assets/main.js"></script>
+    <script defer type="text/javascript" src="assets/tableFilter.js"></script>
+</body>
+
+</html>

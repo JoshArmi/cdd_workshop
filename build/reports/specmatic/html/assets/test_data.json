@@ -1,0 +1,95 @@
+{
+  "/api/messages" : {
+    "POST" : {
+      "text/plain" : {
+        "200" : [ {
+          "name" : " Scenario: POST /api/messages -> 200",
+          "baseUrl" : "http://localhost:3000",
+          "duration" : 2,
+          "testResult" : "Failed",
+          "valid" : true,
+          "wip" : false,
+          "request" : "POST /api/messages\nSpecmatic-Response-Code: 200\nAccept-Charset: UTF-8\nAccept: */*\nContent-Type: text/plain\n\nIGMON",
+          "requestTime" : 1743429517077,
+          "response" : "200 OK\nContent-Type: application/json\nTransfer-Encoding: chunked\nDate: Mon, 31 Mar 2025 13:58:37 GMT\nKeep-Alive: timeout=60\nConnection: keep-alive\n\n{\n    \"id\": \"cbc58cd4-e280-45c1-8ccc-13eaf81c8e2a\",\n    \"content\": \"IGMON\",\n    \"timestamp\": \"2025-03-31 13:58:37\"\n}",
+          "responseTime" : 1743429517079,
+          "specFileName" : "/Users/josharmitage/Code/cdd_workshop/openapi.yaml",
+          "details" : " Scenario: POST /api/messages -> 200 has FAILED\nIn scenario \"Create a new message. Response: Message created successfully\"\nAPI: POST /api/messages -> 200\n\n  >> RESPONSE.BODY.timestamp\n  \n     Error: Error while parsing the dateTime as per RFC 3339: 2025-03-31 13:58:37",
+          "htmlResult" : "Failed"
+        } ]
+      },
+      "" : {
+        "400" : [ {
+          "name" : "Scenario: /api/messages -> 400",
+          "baseUrl" : "http://localhost:3000",
+          "duration" : 0,
+          "testResult" : "NotCovered",
+          "valid" : true,
+          "wip" : false,
+          "request" : "No Request",
+          "requestTime" : 0,
+          "response" : "No Response",
+          "responseTime" : 0,
+          "specFileName" : "/Users/josharmitage/Code/cdd_workshop/openapi.yaml",
+          "details" : "Scenario: /api/messages -> 400 has been SKIPPED",
+          "htmlResult" : "Skipped"
+        } ]
+      }
+    },
+    "GET" : {
+      "" : {
+        "200" : [ {
+          "name" : " Scenario: GET /api/messages -> 200",
+          "baseUrl" : "http://localhost:3000",
+          "duration" : 0,
+          "testResult" : "Failed",
+          "valid" : true,
+          "wip" : false,
+          "request" : "GET /api/messages\nSpecmatic-Response-Code: 200\nAccept-Charset: UTF-8\nAccept: */*\nContent-Type: NOT SENT\n\n",
+          "requestTime" : 1743429517126,
+          "response" : "200 OK\nContent-Type: application/json\nTransfer-Encoding: chunked\nDate: Mon, 31 Mar 2025 13:58:37 GMT\nKeep-Alive: timeout=60\nConnection: keep-alive\n\n[\n    {\n        \"id\": \"4b6336e8-0cd7-499f-8e07-2a27ba751531\",\n        \"content\": \"IXMVC\",\n        \"timestamp\": \"2025-03-31 13:48:50\"\n    },\n    {\n        \"id\": \"cbc58cd4-e280-45c1-8ccc-13eaf81c8e2a\",\n        \"content\": \"IGMON\",\n        \"timestamp\": \"2025-03-31 13:58:37\"\n    }\n]",
+          "responseTime" : 1743429517126,
+          "specFileName" : "/Users/josharmitage/Code/cdd_workshop/openapi.yaml",
+          "details" : " Scenario: GET /api/messages -> 200 has FAILED\nIn scenario \"Get all messages. Response: List of messages retrieved successfully\"\nAPI: GET /api/messages -> 200\n\n  >> RESPONSE.BODY[0].timestamp\n  \n     Error: Error while parsing the dateTime as per RFC 3339: 2025-03-31 13:48:50\n  \n  >> RESPONSE.BODY[1].timestamp\n  \n     Error: Error while parsing the dateTime as per RFC 3339: 2025-03-31 13:58:37",
+          "htmlResult" : "Failed"
+        } ]
+      }
+    }
+  },
+  "/api/messages/{id}" : {
+    "GET" : {
+      "" : {
+        "200" : [ {
+          "name" : " Scenario: GET /api/messages/(id:string) -> 200",
+          "baseUrl" : "http://localhost:3000",
+          "duration" : 0,
+          "testResult" : "Failed",
+          "valid" : true,
+          "wip" : false,
+          "request" : "GET /api/messages/NTFDC\nSpecmatic-Response-Code: 200\nAccept-Charset: UTF-8\nAccept: */*\nContent-Type: NOT SENT\n\n",
+          "requestTime" : 1743429517142,
+          "response" : "404 Not Found\nContent-Length: 0\nDate: Mon, 31 Mar 2025 13:58:37 GMT\nKeep-Alive: timeout=60\nConnection: keep-alive\n\n",
+          "responseTime" : 1743429517142,
+          "specFileName" : "/Users/josharmitage/Code/cdd_workshop/openapi.yaml",
+          "details" : " Scenario: GET /api/messages/(id:string) -> 200 has FAILED\nIn scenario \"Get message by ID. Response: Message retrieved successfully\"\nAPI: GET /api/messages/(id:string) -> 200\n\n  >> RESPONSE.STATUS\n  \n     Expected status 200, actual was status 404",
+          "htmlResult" : "Failed"
+        } ],
+        "404" : [ {
+          "name" : "Scenario: /api/messages/{id} -> 404",
+          "baseUrl" : "http://localhost:3000",
+          "duration" : 0,
+          "testResult" : "NotCovered",
+          "valid" : true,
+          "wip" : false,
+          "request" : "No Request",
+          "requestTime" : 0,
+          "response" : "No Response",
+          "responseTime" : 0,
+          "specFileName" : "/Users/josharmitage/Code/cdd_workshop/openapi.yaml",
+          "details" : "Scenario: /api/messages/{id} -> 404 has been SKIPPED",
+          "htmlResult" : "Skipped"
+        } ]
+      }
+    }
+  }
+}
