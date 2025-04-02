@@ -26,3 +26,10 @@ down:
 
 contract-test:
 	docker run --network specmatic -v "$$(pwd)/service.yaml:/service.yaml" znsio/specmatic test "/service.yaml" --testBaseURL=http://api:8080
+
+generate-examples:
+	docker run -v "$$(pwd)/service.yaml:/usr/src/app/service.yaml" -v "$$(pwd)/service_examples:/usr/src/app/service_examples" znsio/specmatic-openapi examples generate service.yaml
+
+contract-test-examples:
+	docker run --network specmatic -v "$$(pwd)/service.yaml:/service.yaml" -v "$$(pwd)/service_examples:/service_examples" znsio/specmatic test "/service.yaml" --testBaseURL=http://api:8080
+

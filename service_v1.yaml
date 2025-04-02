@@ -39,41 +39,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-    get:
-      summary: Get all messages
-      description: Retrieves all messages in the system
-      operationId: getAllMessages
-      responses:
-        '200':
-          description: List of messages retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Message'
-
-  /api/messages/{id}:
-    get:
-      summary: Get message by ID
-      description: Retrieves a specific message by its ID
-      operationId: getMessageById
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: Message retrieved successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Message'
-        '404':
-          description: Message not found
 
 components:
   schemas:
