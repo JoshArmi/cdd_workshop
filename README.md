@@ -38,6 +38,7 @@
 2. Run `make contract-test` and review to ensure you're at 100% API coverage.
 3. Remove the `@NotNull` decorators in `CreateMEssageRequest.java`.
 4. Run `make contract-test` to show how the test failing now you're not receiving a 400 status code.
+5. Add the decorators back to have the test pass again.
 
 ### Step 5: Making examples manageable
 
@@ -66,6 +67,7 @@
 2. Run `make contract-test` or `make contract-test-examples` to show that the same failing tests exist
 3. Fix the backend code
 4. Restart the backend container
+5. Validate that the fixes work by running `make contract-test`
 
 ### Extension
 
